@@ -3,7 +3,7 @@ dotnet-api:
   replicaCount: 1
   image:
     repository: registry-1.docker.io/fchanteau95/sample-api
-    tag: "v1.0.0"
+    tag: "v1.0.1"
   ingress:
     enabled: true
     className: nginx
