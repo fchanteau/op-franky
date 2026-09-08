@@ -1,0 +1,23 @@
+# api-sales / devci overrides. All values feed the dotnet-api subchart.
+dotnet-api:
+  replicaCount: 1
+  image:
+    repository: registry-1.docker.io/fchanteau95/starter-app
+    tag: "latest"
+  ingress:
+    enabled: true
+    className: nginx
+    hosts:
+      - host: api-sales.devci.example.local
+        paths:
+          - path: /
+            pathType: Prefix
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  autoscaling:
+    enabled: false
