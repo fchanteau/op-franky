@@ -1,0 +1,32 @@
+# api-orders / prod overrides. All values feed the dotnet-api subchart.
+dotnet-api:
+  replicaCount: 3
+  image:
+    repository: registry.example.com/franky/api-orders
+    tag: "1.0.0"
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: api-orders.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: api-orders-tls
+        hosts:
+          - api-orders.example.com
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70

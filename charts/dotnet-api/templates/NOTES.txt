@@ -1,0 +1,12 @@
+{{ include "dotnet-api.fullname" . }} deployed (chart {{ include "dotnet-api.chart" . }}).
+
+appsettings.json is mounted read-only at: {{ .Values.configMountPath }}/appsettings.json
+
+{{- if .Values.ingress.enabled }}
+Reachable via Ingress:
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+{{- else }}
+Service {{ include "dotnet-api.fullname" . }} ({{ .Values.service.type }}) on port {{ .Values.service.port }}.
+{{- end }}

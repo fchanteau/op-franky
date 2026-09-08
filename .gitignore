@@ -1,0 +1,13 @@
+# Helm build artifacts
+**/charts/*.tgz
+**/Chart.lock
+**/tmpcharts/
+dist/
+
+# Resolved subchart dependencies pulled locally
+**/api-orders/**/charts/
+**/api-customers/**/charts/
+
+# OS/editor
+.DS_Store
+.vscode/

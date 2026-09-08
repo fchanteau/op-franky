@@ -1,0 +1,23 @@
+# api-customers / devci overrides. All values feed the dotnet-api subchart.
+dotnet-api:
+  replicaCount: 1
+  image:
+    repository: registry.example.com/franky/api-customers
+    tag: "devci"
+  ingress:
+    enabled: true
+    className: nginx
+    hosts:
+      - host: api-customers.devci.example.local
+        paths:
+          - path: /
+            pathType: Prefix
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  autoscaling:
+    enabled: false

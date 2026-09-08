@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: franky
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Franky platform apps (dotnet-api based)
+  sourceRepos:
+    - https://github.com/your-org/franky.git
+    - oci://registry.example.com/franky/helm
+  destinations:
+    - name: nonprod
+      server: https://kubernetes.default.svc
+      namespace: devci
+    - name: nonprod
+      server: https://kubernetes.default.svc
+      namespace: uatrc
+    - name: prod
+      server: https://prod.k8s.example.com:6443
+      namespace: prod
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  orphanedResources:
+    warn: true

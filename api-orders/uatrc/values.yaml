@@ -1,0 +1,26 @@
+# api-orders / uatrc overrides. All values feed the dotnet-api subchart.
+dotnet-api:
+  replicaCount: 2
+  image:
+    repository: registry.example.com/franky/api-orders
+    tag: "uatrc"
+  ingress:
+    enabled: true
+    className: nginx
+    hosts:
+      - host: api-orders.uatrc.example.local
+        paths:
+          - path: /
+            pathType: Prefix
+  resources:
+    limits:
+      cpu: "1"
+      memory: 768Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75

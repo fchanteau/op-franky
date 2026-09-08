@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dotnet-api.appsettingsConfigMapName" . }}
+  labels:
+    {{- include "dotnet-api.labels" . | nindent 4 }}
+data:
+  appsettings.json: |-
+{{- if .Values.appsettings }}
+{{ .Values.appsettings | indent 4 }}
+{{- else }}
+    {}
+{{- end }}

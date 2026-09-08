@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: api-customers
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    # Discovers api-customers/devci, api-customers/uatrc, api-customers/prod.
+    - git:
+        repoURL: https://github.com/your-org/franky.git
+        revision: HEAD
+        directories:
+          - path: api-customers/*
+  template:
+    metadata:
+      name: 'api-customers-{{.path.basename}}'
+      labels:
+        app.kubernetes.io/part-of: api-customers
+        env: '{{.path.basename}}'
+    spec:
+      project: franky
+      source:
+        repoURL: https://github.com/your-org/franky.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+          # Loads the per-env appsettings.json file into the common chart value.
+          fileParameters:
+            - name: dotnet-api.appsettings
+              path: appsettings.json
+      destination:
+        # devci/uatrc -> nonprod cluster; prod -> prod cluster.
+        server: '{{ if eq .path.basename "prod" }}https://prod.k8s.example.com:6443{{ else }}https://kubernetes.default.svc{{ end }}'
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

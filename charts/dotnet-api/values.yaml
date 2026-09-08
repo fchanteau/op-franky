@@ -1,0 +1,96 @@
+# Default values for the dotnet-api common chart.
+# App/environment umbrella charts override these under the `dotnet-api:` key.
+
+replicaCount: 1
+
+image:
+  repository: registry.example.com/franky/dotnet-api
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+# ASP.NET Core listens here; config is mounted read-only at configMountPath.
+containerPort: 8080
+configMountPath: /app/config
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: null
+
+# Extra environment variables passed to the container.
+env: []
+envFrom: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Raw appsettings.json content, injected by ArgoCD via helm.fileParameters
+# (`--set-file dotnet-api.appsettings=appsettings.json`). Rendered into a
+# ConfigMap and mounted read-only at configMountPath/appsettings.json.
+appsettings: ""

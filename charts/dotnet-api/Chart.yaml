@@ -1,0 +1,8 @@
+apiVersion: v2
+name: dotnet-api
+description: Common versioned Helm chart for .NET APIs (Deployment, Service, Ingress, HPA, appsettings ConfigMap)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+maintainers:
+  - name: platform-team

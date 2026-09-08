@@ -1,0 +1,27 @@
+# App-of-Apps root. Apply once; it manages the AppProject and every ApplicationSet
+# under apps/. Runs in the default project to avoid a chicken/egg with project.yaml.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/franky.git
+    targetRevision: HEAD
+    path: apps
+    directory:
+      recurse: false
+      exclude: root-app.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

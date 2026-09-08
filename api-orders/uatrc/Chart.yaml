@@ -1,0 +1,11 @@
+apiVersion: v2
+name: api-orders
+description: api-orders umbrella chart (uatrc) — pins the versioned dotnet-api common chart
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  # Bump per environment to roll out common-chart changes independently.
+  - name: dotnet-api
+    version: 1.0.0
+    repository: oci://registry.example.com/franky/helm

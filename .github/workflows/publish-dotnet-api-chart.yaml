@@ -1,0 +1,42 @@
+name: publish-dotnet-api-chart
+
+# Publishes the versioned common chart to the OCI registry on tag push.
+# Tag format: chart-dotnet-api-vX.Y.Z (the vX.Y.Z must match Chart.yaml version).
+on:
+  push:
+    tags:
+      - "chart-dotnet-api-v*"
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  CHART_DIR: charts/dotnet-api
+  OCI_REPO: oci://registry-1.docker.io/fchanteau95/dotnet-api
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: v4.0.0
+
+      - name: Lint
+        run: helm lint "${CHART_DIR}"
+
+      - name: Registry login
+        run: |
+          echo "${{ secrets.OCI_REGISTRY_PASSWORD }}" | \
+            helm registry login registry-1.docker.io \
+              --username "fchanteau95" \
+              --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
+
+      - name: Package
+        run: helm package "${CHART_DIR}" --destination dist
+
+      - name: Push
+        run: helm push dist/dotnet-api-*.tgz "${OCI_REPO}"
