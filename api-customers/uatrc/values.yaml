@@ -2,10 +2,10 @@
 dotnet-api:
   replicaCount: 2
   image:
-    repository: registry-1.docker.io/fchanteau95/starter-app
-    tag: "latest"
+    repository: registry-1.docker.io/fchanteau95/sample-api
+    tag: "v1.0.1"
   ingress:
-    enabled: true
+    enabled: false
     className: nginx
     hosts:
       - host: api-customers.uatrc.example.local
