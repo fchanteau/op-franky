@@ -13,7 +13,7 @@ permissions:
 
 env:
   CHART_DIR: charts/dotnet-api
-  OCI_REPO: oci://registry-1.docker.io/fchanteau95/dotnet-api
+  OCI_REPO: oci://registry-1.docker.io/fchanteau95
 
 jobs:
   publish:
