@@ -10,7 +10,7 @@ spec:
   generators:
     # Discovers api-customers/devci, api-customers/uatrc, api-customers/prod.
     - git:
-        repoURL: https://github.com/your-org/franky.git
+        repoURL: https://github.com/fchanteau/op-franky.git
         revision: HEAD
         directories:
           - path: api-customers/*
@@ -23,7 +23,7 @@ spec:
     spec:
       project: franky
       source:
-        repoURL: https://github.com/your-org/franky.git
+        repoURL: https://github.com/fchanteau/op-franky.git
         targetRevision: HEAD
         path: '{{.path.path}}'
         helm:

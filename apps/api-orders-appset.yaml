@@ -10,7 +10,7 @@ spec:
   generators:
     # Discovers api-orders/devci, api-orders/uatrc, api-orders/prod.
     - git:
-        repoURL: https://github.com/your-org/franky.git
+        repoURL: https://github.com/fchanteau/op-franky.git
         revision: HEAD
         directories:
           - path: api-orders/*
@@ -23,7 +23,7 @@ spec:
     spec:
       project: franky
       source:
-        repoURL: https://github.com/your-org/franky.git
+        repoURL: https://github.com/fchanteau/op-franky.git
         targetRevision: HEAD
         path: '{{.path.path}}'
         helm:

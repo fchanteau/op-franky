@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/franky.git
+    repoURL: https://github.com/fchanteau/op-franky.git
     targetRevision: HEAD
     path: apps
     directory:

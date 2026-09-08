@@ -4,7 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.example.com/franky/dotnet-api
+  repository: registry-1.docker.io/fchanteau95/dotnet-api
   tag: "latest"
   pullPolicy: IfNotPresent
 

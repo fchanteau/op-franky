@@ -2,8 +2,8 @@
 dotnet-api:
   replicaCount: 2
   image:
-    repository: registry.example.com/franky/api-orders
-    tag: "uatrc"
+    repository: registry-1.docker.io/fchanteau95/starter-app
+    tag: "latest"
   ingress:
     enabled: true
     className: nginx

@@ -8,8 +8,8 @@ metadata:
 spec:
   description: Franky platform apps (dotnet-api based)
   sourceRepos:
-    - https://github.com/your-org/franky.git
-    - oci://registry.example.com/franky/helm
+    - https://github.com/fchanteau/op-franky.git
+    - oci://registry-1.docker.io/fchanteau95/dotnet-api
   destinations:
     - name: nonprod
       server: https://kubernetes.default.svc
