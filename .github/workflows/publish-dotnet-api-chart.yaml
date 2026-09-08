@@ -30,10 +30,9 @@ jobs:
 
       - name: Registry login
         run: |
-          echo "${{ secrets.OCI_REGISTRY_PASSWORD }}" | \
-            helm registry login registry-1.docker.io \
-              --username "fchanteau95" \
-              --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
+          helm registry login registry-1.docker.io \
+            --username "fchanteau95" \
+            --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
 
       - name: Package
         run: helm package "${CHART_DIR}" --destination dist
