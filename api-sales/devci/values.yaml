@@ -5,7 +5,7 @@ dotnet-api:
     repository: registry-1.docker.io/fchanteau95/sample-api
     tag: "v1.0.1"
   ingress:
-    enabled: true
+    enabled: false
     className: nginx
     hosts:
       - host: api-sales.devci.example.local
