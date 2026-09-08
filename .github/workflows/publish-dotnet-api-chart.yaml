@@ -3,6 +3,7 @@ name: publish-dotnet-api-chart
 # Publishes the versioned common chart to the OCI registry on tag push.
 # Tag format: chart-dotnet-api-vX.Y.Z (the vX.Y.Z must match Chart.yaml version).
 on:
+  workflow_dispatch:
   push:
     tags:
       - "chart-dotnet-api-v*"
